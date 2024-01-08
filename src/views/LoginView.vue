@@ -118,4 +118,11 @@ label {
   color: #084438;
   font-size: 16px;
 }
+
+.p-inputtext {
+    background-color: #cde9e6;
+    color: #084438;
+    border-radius: 5px;
+    border: none;
+}
 </style>

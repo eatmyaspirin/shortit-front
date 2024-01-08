@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores/user';
+import axios from '../axios.config'
 import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -12,9 +14,6 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/LoginView.vue'),
       meta: {
         hideNavbar: true,
@@ -23,7 +22,11 @@ const router = createRouter({
     {
       path: '/logout',
       name: 'logout',
-      component: () => import('../views/LogoutView.vue')
+      beforeEnter: async () => {
+        await axios.post("/logout");
+        useUserStore().logout();
+        router.go();
+      },
     },
     {
       path: '/create',
@@ -38,5 +41,15 @@ const router = createRouter({
 
   ]
 })
+
+router.beforeEach(async (to) => {
+  const publicPages = ['/login', '/'];
+  const authRequired = !publicPages.includes(to.path);
+  const auth = useUserStore();
+
+  if (authRequired && !auth.user.userId) {
+      return '/login';
+  }
+});
 
 export default router

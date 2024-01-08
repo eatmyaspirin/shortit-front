@@ -7,9 +7,16 @@ export const useUserStore = defineStore('userStore', () => {
     'userId': ''
   })
   const getUserName = computed(() => user.value.username)
-  function login(userInfo) {
+  const isLoggedIn = computed(() => user.value.username != 0)
+  const login = (userInfo) => {
     user.value = userInfo;
   }
-
-  return { user, getUserName, login }
+  const logout = () => {
+    user.value = {
+      'username': '',
+      'userId': ''
+    };
+    localStorage.removeItem("state");
+  }
+  return { user, getUserName, isLoggedIn, login, logout }
 })
