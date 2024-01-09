@@ -7,7 +7,7 @@ export const useUserStore = defineStore('userStore', () => {
     'userId': ''
   })
   const getUserName = computed(() => user.value.username)
-  const isLoggedIn = computed(() => user.value.username != 0)
+  const isLoggedIn = computed(() => user.value.username.length != 0)
   const login = (userInfo) => {
     user.value = userInfo;
   }

@@ -1,5 +1,5 @@
 <template>
     <div>
-        Manage
+        WIP
     </div>
 </template>

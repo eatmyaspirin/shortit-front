@@ -4,11 +4,11 @@
       <div class="left">Shortit</div>
       <InputGroup class="auth-group">
         <span class="p-float-label">
-          <InputText id="username" v-model="userinfo.username" />
+          <InputText id="username" autocomplete="off" v-model="userinfo.username" />
           <label for="username">Username</label>
         </span>
         <span class="p-float-label">
-          <InputText id="password" type="password" v-model="userinfo.password" />
+          <InputText id="password" type="password" autocomplete="off" v-model="userinfo.password" />
           <label for="password">Password</label>
         </span>
         <div class="action-button">
@@ -40,12 +40,13 @@ const onClickLogin = () => {
       console.log(res)
       if(res.status == 200 && res.data.userId) {
         userStore.login({'username': res.data.userId, 'userId': res.data.userId})
-        router.push('/')
+        router.push('/');
       }
     })
 }
 
 const onClickRegister = () => {
+  console.log(userStore.isLoggedIn)
   axios.get('/user/getMyURLs').then((resp)=>{console.log(resp)})
 }
   </script>
@@ -70,17 +71,18 @@ const onClickRegister = () => {
 }
 .background {
   display: flex;
-  height: 500px;
+  height: 425px;
+  padding-right: 24px;
   background-size: cover;
   border-radius: 4px;
-  backdrop-filter: blur(8px); /* Chrome and Opera */
+  backdrop-filter: blur(8px);
   box-shadow: inset 0 0 0 500px rgba(255, 255, 255, 0.1);
 }
 .auth-group {
   display: flex;
   width: 400px;
   flex-direction: column;
-  padding: 24px 24px;
+  padding: 24px 32px;
   border-radius: 2%;
   justify-content: center;
 }
