@@ -16,6 +16,7 @@ import InputGroup from 'primevue/inputgroup'
 import Button from 'primevue/button'
 import Editor from 'primevue/editor'
 import Textarea from 'primevue/textarea'
+import ToggleButton from 'primevue/togglebutton'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -50,11 +51,14 @@ app.use(PrimeVue, {
   }
 })
 
+// Components------------------------------------------
 app.component('MenuBar', Menubar)
 app.component('InputText', Inputtext)
 app.component('InputGroup', InputGroup)
 app.component('AltButton', Button)
 app.component('Editor', Editor)
 app.component('TextArea', Textarea)
-
+app.component('PButton', Button)
+app.component('ToggleButton', ToggleButton)
+//------------------------------------------------------
 app.mount('#app')

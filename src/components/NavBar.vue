@@ -18,7 +18,7 @@
             ><i class="pi pi-sign-out"></i>Logout</RouterLink
           >
           <RouterLink v-else to="/login"><i class="pi pi-sign-in"></i>Login</RouterLink>
-          <span v-if="userStore.isLoggedIn">{{ userStore.user.username }}</span>
+          <span v-if="userStore.isLoggedIn"><i class="pi pi-user"></i>{{ userStore.user.username }}</span>
         </div>
       </div>
     </template>
@@ -38,7 +38,9 @@ const items = ref([
     icon: 'pi pi-plus',
     isAuth: true,
     command: () => {
-      router.push({ path: '/' })
+      if(router.currentRoute.value.path== '/') {
+        router.go();
+      } else router.push({ path: '/' })
     }
   },
   {
@@ -63,13 +65,10 @@ const items = ref([
   color: white;
 }
 
-.pi.pi-sign-out {
+.pi.pi-sign-out, .pi.pi-user, .pi.pi-sign-in {
   margin-right: 8px;
 }
 
-.pi.pi-sign-in {
-  margin-right: 8px;
-}
 .p-menubar {
   border-radius: 0;
   backdrop-filter: blur(0.2px);

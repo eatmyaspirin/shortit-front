@@ -39,8 +39,8 @@ const onClickLogin = () => {
     }).then((res)=>{
       console.log(res)
       if(res.status == 200 && res.data.userId) {
-        userStore.login({'username': res.data.userId, 'userId': res.data.userId})
-        router.push('/');
+        userStore.login({'username': userinfo.value.username, 'userId': res.data.userId})
+        router.push('/')
       }
     })
 }

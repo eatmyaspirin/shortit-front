@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/user'
 import axios from '../axios.config'
 import HomeView from '../views/HomeView.vue'
 
@@ -14,42 +14,37 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue'),
-      meta: {
-        hideNavbar: true,
-       }
+      component: () => import('../views/LoginView.vue')
     },
     {
       path: '/logout',
       name: 'logout',
       beforeEnter: async () => {
-        await axios.post("/logout");
-        useUserStore().logout();
-        router.go();
-      },
-    },
-    {
-      path: '/create',
-      name: 'create',
-      component: () => import('../views/CreateView.vue')
+        await axios.post('/logout')
+        useUserStore().logout()
+        router.go()
+      }
     },
     {
       path: '/manage',
       name: 'manage',
       component: () => import('../views/ManageView.vue')
     },
-
+    {
+      path: '/:shortUrl',
+      component: () => import('../views/PasteView.vue')
+    }
   ]
 })
 
 router.beforeEach(async (to) => {
-  const publicPages = ['/login', '/'];
-  const authRequired = !publicPages.includes(to.path);
-  const auth = useUserStore();
+  const publicPages = ['/login', '/']
+  const authRequired = !publicPages.includes(to.path)
+  const auth = useUserStore()
 
   if (authRequired && !auth.user.userId) {
-      return '/login';
+    return '/login'
   }
-});
+})
 
 export default router
