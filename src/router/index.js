@@ -14,7 +14,12 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue')
+      component: () => import('../views/AuthView.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/AuthView.vue')
     },
     {
       path: '/logout',
@@ -38,8 +43,8 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-  const publicPages = ['/login', '/']
-  const authRequired = !publicPages.includes(to.path)
+  const privatePages = ['/manage']
+  const authRequired = privatePages.includes(to.path)
   const auth = useUserStore()
 
   if (authRequired && !auth.user.userId) {

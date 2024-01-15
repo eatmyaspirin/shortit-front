@@ -6,10 +6,5 @@
 <script setup>
 import FooterBar from './components/FooterBar.vue';
 import NavBar from './components/NavBar.vue';
-
-
 </script>
 
-<style scoped>
-
-</style>
