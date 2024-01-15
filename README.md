@@ -1,6 +1,6 @@
-# shortit-front
+# Shortit Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Frontend for the shortit application, made using Vue.
 
 ## Recommended IDE Setup
 
