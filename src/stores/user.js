@@ -4,7 +4,8 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('userStore', () => {
   const user = ref({
     'username': '',
-    'userId': ''
+    'userId': '',
+    'loggedIn': '',
   })
   const getUserName = computed(() => user.value.username)
   const isLoggedIn = computed(() => user.value.username.length != 0)
@@ -14,7 +15,8 @@ export const useUserStore = defineStore('userStore', () => {
   const logout = () => {
     user.value = {
       'username': '',
-      'userId': ''
+      'userId': '',
+      'loggedIn': '',
     };
     localStorage.removeItem("state");
   }

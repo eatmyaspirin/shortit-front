@@ -17,13 +17,17 @@ import Button from 'primevue/button'
 import Editor from 'primevue/editor'
 import Textarea from 'primevue/textarea'
 import ToggleButton from 'primevue/togglebutton'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
 
 const app = createApp(App)
 const pinia = createPinia()
 
-// persist state to localstorage
 if (localStorage.getItem('state')) {
-  pinia.state.value = JSON.parse(localStorage.getItem('state'))
+  const savedState = JSON.parse(localStorage.getItem('state'));
+  if (!(new Date().getTime() - savedState.userStore.user.loggedIn > import.meta.env.STATE_MAX_AGE)) {
+    pinia.state.value = savedState;
+  }
 }
 watch(
   pinia.state,
@@ -60,5 +64,7 @@ app.component('Editor', Editor)
 app.component('TextArea', Textarea)
 app.component('PButton', Button)
 app.component('ToggleButton', ToggleButton)
+app.component('Column', Column)
+app.component('DataTable', DataTable)
 //------------------------------------------------------
 app.mount('#app')
