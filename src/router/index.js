@@ -46,7 +46,6 @@ router.beforeEach(async (to) => {
   const privatePages = ['/manage']
   const authRequired = privatePages.includes(to.path)
   const auth = useUserStore()
-
   if (authRequired && !auth.user.userId) {
     return '/login'
   }

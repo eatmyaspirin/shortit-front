@@ -8,7 +8,7 @@ import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config'
 import 'primeflex/primeflex.css'
-import 'primevue/resources/themes/lara-light-green/theme.css'
+import 'primevue/resources/themes/aura-dark-noir/theme.css'
 import 'primeicons/primeicons.css'
 import Menubar from 'primevue/menubar'
 import Inputtext from 'primevue/inputtext'
@@ -19,13 +19,15 @@ import Textarea from 'primevue/textarea'
 import ToggleButton from 'primevue/togglebutton'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import Chart from 'primevue/chart';
+
 
 const app = createApp(App)
 const pinia = createPinia()
 
 if (localStorage.getItem('state')) {
   const savedState = JSON.parse(localStorage.getItem('state'));
-  if (!(new Date().getTime() - savedState.userStore.user.loggedIn > import.meta.env.STATE_MAX_AGE)) {
+  if (!(new Date().getTime() - savedState.userStore.user.loggedIn > import.meta.env.VITE_STATE_MAX_AGE*1000)) {
     pinia.state.value = savedState;
   }
 }
@@ -66,5 +68,6 @@ app.component('PButton', Button)
 app.component('ToggleButton', ToggleButton)
 app.component('Column', Column)
 app.component('DataTable', DataTable)
+app.component('Chart', Chart)
 //------------------------------------------------------
 app.mount('#app')
