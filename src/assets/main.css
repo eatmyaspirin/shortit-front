@@ -5,4 +5,14 @@
     height: 100vh;
 }
 
+.p-datatable-flex-scrollable > .p-datatable-wrapper {
+    border-radius: 0 0 5px 5px !important;
+  }
 
+.p-datatable-header {
+    border-radius: 5px 5px 0 0 !important;
+}
+
+tr, th, .p-datatable-header, .p-datatable-wrapper {
+    background-color: black !important;
+}

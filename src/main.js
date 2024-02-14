@@ -8,7 +8,7 @@ import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config'
 import 'primeflex/primeflex.css'
-import 'primevue/resources/themes/aura-dark-noir/theme.css'
+import 'primevue/resources/themes/lara-dark-green/theme.css'
 import 'primeicons/primeicons.css'
 import Menubar from 'primevue/menubar'
 import Inputtext from 'primevue/inputtext'
@@ -20,6 +20,8 @@ import ToggleButton from 'primevue/togglebutton'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Chart from 'primevue/chart';
+import Listbox from 'primevue/listbox';
+
 
 
 const app = createApp(App)
@@ -69,5 +71,6 @@ app.component('ToggleButton', ToggleButton)
 app.component('Column', Column)
 app.component('DataTable', DataTable)
 app.component('Chart', Chart)
+app.component('ListBox', Listbox)
 //------------------------------------------------------
 app.mount('#app')

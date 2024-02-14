@@ -7,25 +7,38 @@
           :value="products"
           tableStyle="min-width: 50rem"
           :scrollable="true"
+          v-model:selection="selected"
+          selectionMode="single"
           scrollHeight="flex"
+          :metaKeySelection="true"
         >
           <template #header>
             <div class="flex flex-wrap align-items-center justify-content-between gap-2">
               <span class="text-xl text-900 font-bold">My Pastes</span>
             </div>
           </template>
+          <Column selectionMode="single" headerStyle="width: 3rem"></Column>
+          <Column field="id" header="S. No."></Column>
           <Column field="isUrl" header="Type"></Column>
           <Column field="pasteData" header="Data"></Column>
           <Column field="shortUrl" header="Short URL"></Column>
           <Column field="urlId" header="Paste ID"></Column>
           <Column field="createdDate" header="Created On"></Column>
+          <Column>
+            <template #body>
+              <button @click="onClickCopy" style="margin-right: 8px;">Copy</button>
+              <button @click="onClickDelete" >Delete</button>
+            </template>
+          </Column>
         </DataTable>
       </div>
       <div class="right">
         <div class="stats">
-          <Chart type="bar" :data="chartData" :options="chartOptions" />
+          <Chart type="pie" :data="chartData" :options="chartOptions" />
         </div>
-        <div class="content">Content</div>
+        <div class="content">
+          <Chart type="line" :data="chartData" :options="chartOptions" />
+        </div>
       </div>
     </div>
   </div>
@@ -33,9 +46,9 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import Axios from '@/axios.config'
+import axios from '@/axios.config'
 const products = ref([])
-
+const selected = ref();
 onMounted(() => {
   getMyUrls()
   chartData.value = setChartData()
@@ -95,21 +108,33 @@ const setChartOptions = () => {
 }
 
 const getMyUrls = async () => {
-  const response = await Axios.get('/user/getMyUrls')
-  products.value = response.data.data.map((item) => {
+  const response = await axios.get('/user/getMyUrls')
+  products.value = response.data.data.map((item, index) => {
     item.isUrl = item.isUrl ? 'Url' : 'Paste';
     item.pasteData = item.url ? item.url : item.pasteData.slice(0, 15) + '...';
     item.createdDate = new Date(item.createdDate).toGMTString();
+    item.id = index + 1;
     return item
   })
+}
+
+const onClickDelete = async (e) => {
+  e.srcElement.parentNode.click();
+  await axios.post('/user/delete', {'urlId': selected.value.urlId})
+}
+
+const onClickCopy = (e) => {
+  e.srcElement.parentNode.click();
+  navigator.clipboard.writeText(selected.value.isUrl ? axios.defaults.baseURL + '/' + selected.value.shortUrl: 'http://localhost:5173/' + selected.value.shortUrl);
 }
 </script>
 
 <style scoped>
 .manage {
   height: 100%;
-  padding-top: 8%;
-  background-color: #18181b;
+  margin-top: 52px;
+  padding-top: 16px;
+  background-color: #000;
 }
 .wrapper {
   display: flex;
@@ -121,27 +146,36 @@ const getMyUrls = async () => {
   flex-direction: column;
   height: 94%;
   width: 100%;
-  padding: 10px;
-  background-color: white;
+  padding: 16px 0 16px 8px;
+  background-color: #000;
 }
 .right {
+  /* padding-left: 100px; */
   display: flex;
   flex-direction: column;
+  width: 100%;
+  background-color: #000;
+}
+
+.stats {
+  height: 47%;
+}
+
+.content {
+  height: 47%;
+}
+
+.grid {
+  height: 99%;
   width: 100%;
 }
 
 .stats {
-  height: 400px;
+  height: 45vh;
 }
 
-.content {
-  height: 400px;
-}
-
-.grid {
-  height: 90%;
-  width: 50%;
-  max-width: 50%;
+.p-chart {
+  height: 95%;
 }
 
 </style>
