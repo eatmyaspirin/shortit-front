@@ -89,7 +89,7 @@ const isValidUrl = (urlString) => {
   border-radius: 0px;
   border: none;
   font-family: monospace;
-  background-color: #04261c;
+  background-color: #021810;
   color: white;
   resize: none;
   margin-top: 48px;

@@ -86,7 +86,10 @@ const items = ref([
 }
 
 .p-menuitem.p-focus {
-  background-color: none;
+  background: none;
+}
+
+.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
   background: none;
 }
 </style>

@@ -18,7 +18,7 @@
             </div>
           </template>
           <Column selectionMode="single" headerStyle="width: 3rem"></Column>
-          <Column field="id" header="S. No."></Column>
+          <Column field="id" header="S.No."></Column>
           <Column field="isUrl" header="Type"></Column>
           <Column field="pasteData" header="Data"></Column>
           <Column field="shortUrl" header="Short URL"></Column>
@@ -111,7 +111,7 @@ const getMyUrls = async () => {
   const response = await axios.get('/user/getMyUrls')
   products.value = response.data.data.map((item, index) => {
     item.isUrl = item.isUrl ? 'Url' : 'Paste';
-    item.pasteData = item.url ? item.url : item.pasteData.slice(0, 15) + '...';
+    item.pasteData = item.url ? item.url : item.pasteData.length > 15 ? item.pasteData.slice(0, 15) + '...' : item.pasteData;
     item.createdDate = new Date(item.createdDate).toGMTString();
     item.id = index + 1;
     return item
@@ -125,7 +125,8 @@ const onClickDelete = async (e) => {
 
 const onClickCopy = (e) => {
   e.srcElement.parentNode.click();
-  navigator.clipboard.writeText(selected.value.isUrl ? axios.defaults.baseURL + '/' + selected.value.shortUrl: 'http://localhost:5173/' + selected.value.shortUrl);
+  console.log(selected.value)
+  navigator.clipboard.writeText(selected.value.isUrl != 'Url' ? 'http://localhost:5173/' + selected.value.shortUrl: axios.defaults.baseURL + '/' + selected.value.shortUrl);
 }
 </script>
 
@@ -134,7 +135,7 @@ const onClickCopy = (e) => {
   height: 100%;
   margin-top: 52px;
   padding-top: 16px;
-  background-color: #000;
+  background-color: #021810;
 }
 .wrapper {
   display: flex;
@@ -147,14 +148,12 @@ const onClickCopy = (e) => {
   height: 94%;
   width: 100%;
   padding: 16px 0 16px 8px;
-  background-color: #000;
 }
 .right {
   /* padding-left: 100px; */
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: #000;
 }
 
 .stats {
